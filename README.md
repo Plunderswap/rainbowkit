@@ -4,6 +4,12 @@
 
 # RainbowKit
 
+Plunderswap - To package and send to NPM
+
+npm adduser   (might need to login)
+npm version patch -m "an optional description"
+npm publish --access=public ./
+
 **The best way to connect a wallet 🌈**
 
 RainbowKit is a [React](https://reactjs.org/) library that makes it easy to add wallet connection to your dapp.
