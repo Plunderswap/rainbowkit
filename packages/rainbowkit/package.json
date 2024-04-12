@@ -1,6 +1,6 @@
 {
   "name": "@plunderswap/rainbowkit",
-  "version": "0.12.18",
+  "version": "0.12.21",
   "description": "The best way to connect a wallet",
   "files": [
     "dist",
@@ -66,7 +66,8 @@
     "@vanilla-extract/sprinkles": "1.5.0",
     "clsx": "1.1.1",
     "qrcode": "1.5.0",
-    "react-remove-scroll": "2.5.4"
+    "react-remove-scroll": "2.5.4",
+    "@zilliqa-js/zilliqa": "^3.4.4"
   },
   "repository": {
     "type": "git",

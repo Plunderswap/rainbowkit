@@ -14,6 +14,7 @@ import { ShowRecentTransactionsContext } from '../RainbowKitProvider/ShowRecentT
 import { Text } from '../Text/Text';
 import { TxList } from '../Txs/TxList';
 import { ProfileDetailsAction } from './ProfileDetailsAction';
+import { toBech32Address } from "@zilliqa-js/crypto";
 
 interface ProfileDetailsProps {
   address: ReturnType<typeof useAccount>['address'];
@@ -34,8 +35,9 @@ export function ProfileDetails({
 }: ProfileDetailsProps) {
   const showRecentTransactions = useContext(ShowRecentTransactionsContext);
   const [copiedAddress, setCopiedAddress] = useState(false);
-
-  const copyAddressAction = useCallback(() => {
+  let Zil1Address = "";
+  
+    const copyAddressAction = useCallback(() => {
     if (address) {
       navigator.clipboard.writeText(address);
       setCopiedAddress(true);
@@ -55,12 +57,17 @@ export function ProfileDetails({
     return null;
   }
 
-  const accountName = ensName ? formatENS(ensName) : formatAddress(address);
+  const accountName = ensName ? formatENS(ensName) : address;
+
+  if (address !== undefined) {
+    Zil1Address = toBech32Address(address);
+  }
   const ethBalance = balanceData?.formatted;
   const displayBalance = ethBalance
     ? abbreviateETHBalance(parseFloat(ethBalance))
     : undefined;
   const titleId = 'rk_profile_title';
+  const titleId2 = 'rk_profile_title2';
   const mobile = isMobile();
 
   return (
@@ -104,10 +111,20 @@ export function ProfileDetails({
                   as="h1"
                   color="modalText"
                   id={titleId}
-                  size={mobile ? '20' : '18'}
+                  size={mobile ? '16' : '14'}
                   weight="heavy"
                 >
                   {accountName}
+                </Text>
+                <Text> </Text>
+                <Text
+                  as="h1"
+                  color="modalText"
+                  id={titleId2}
+                  size={mobile ? '16' : '14'}
+                  weight="heavy"
+                >
+                  {Zil1Address}
                 </Text>
               </Box>
               {balanceData && (
@@ -135,7 +152,7 @@ export function ProfileDetails({
             <ProfileDetailsAction
               action={copyAddressAction}
               icon={copiedAddress ? <CopiedIcon /> : <CopyIcon />}
-              label={copiedAddress ? 'Copied!' : 'Copy Address'}
+              label={copiedAddress ? 'Copied 0x!' : 'Copy 0x Address'}
             />
             <ProfileDetailsAction
               action={onDisconnect}
