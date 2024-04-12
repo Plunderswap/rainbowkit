@@ -1,6 +1,6 @@
 {
   "name": "@plunderswap/rainbowkit",
-  "version": "0.12.21",
+  "version": "0.12.25",
   "description": "The best way to connect a wallet",
   "files": [
     "dist",

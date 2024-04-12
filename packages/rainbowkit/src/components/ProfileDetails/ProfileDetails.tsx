@@ -35,6 +35,7 @@ export function ProfileDetails({
 }: ProfileDetailsProps) {
   const showRecentTransactions = useContext(ShowRecentTransactionsContext);
   const [copiedAddress, setCopiedAddress] = useState(false);
+  const [copiedAddress2, setCopiedAddress2] = useState(false);
   let Zil1Address = "";
   
     const copyAddressAction = useCallback(() => {
@@ -52,6 +53,22 @@ export function ProfileDetails({
       return () => clearTimeout(timer);
     }
   }, [copiedAddress]);
+
+  const copyAddressAction2 = useCallback(() => {
+    if (Zil1Address) {
+      navigator.clipboard.writeText(Zil1Address);
+      setCopiedAddress2(true);
+    }
+  }, [Zil1Address]);
+
+  useEffect(() => {
+    if (copiedAddress2) {
+      const timer = setTimeout(() => {
+        setCopiedAddress2(false);
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [copiedAddress2]);
 
   if (!address) {
     return null;
@@ -106,29 +123,57 @@ export function ProfileDetails({
               gap={mobile ? '4' : '0'}
               textAlign="center"
             >
-              <Box textAlign="center">
-                <Text
+              <Box textAlign="center" gap="4">
+              <Text
                   as="h1"
                   color="modalText"
                   id={titleId}
                   size={mobile ? '16' : '14'}
                   weight="heavy"
                 >
+                    Your Address
+                  </Text>
+                  <Text
+                    as="h1"
+                    color="modalTextSecondary"
+                    id={titleId}
+                    size={mobile ? '16' : '14'}
+                    weight="semibold"
+                  >
                   {accountName}
                 </Text>
-                <Text> </Text>
-                <Text
+              </Box>
+              <Box textAlign="center" gap="4" paddingTop="16">
+              <Text
                   as="h1"
                   color="modalText"
                   id={titleId2}
                   size={mobile ? '16' : '14'}
                   weight="heavy"
                 >
+                    Your Zil1 Address
+                  </Text>
+                  <Text
+                    as="h1"
+                    color="modalTextSecondary"
+                    id={titleId}
+                    size={mobile ? '16' : '14'}
+                    weight="semibold"
+                  >
                   {Zil1Address}
                 </Text>
               </Box>
               {balanceData && (
-                <Box textAlign="center">
+                <Box textAlign="center" gap="4" paddingTop="16">
+                                <Text
+                  as="h1"
+                  color="modalText"
+                  id={titleId2}
+                  size={mobile ? '16' : '14'}
+                  weight="heavy"
+                >
+                    Balance
+                  </Text>
                   <Text
                     as="h1"
                     color="modalTextSecondary"
@@ -152,7 +197,12 @@ export function ProfileDetails({
             <ProfileDetailsAction
               action={copyAddressAction}
               icon={copiedAddress ? <CopiedIcon /> : <CopyIcon />}
-              label={copiedAddress ? 'Copied 0x!' : 'Copy 0x Address'}
+              label={copiedAddress ? 'Copied 0x!' : 'Copy 0x'}
+            />
+            <ProfileDetailsAction
+              action={copyAddressAction2}
+              icon={copiedAddress2 ? <CopiedIcon /> : <CopyIcon />}
+              label={copiedAddress2 ? 'Copied Zil1!' : 'Copy Zil1'}
             />
             <ProfileDetailsAction
               action={onDisconnect}
